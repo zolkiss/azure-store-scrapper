@@ -1,27 +1,17 @@
 import logging
+import json
 import azure.functions as func
 
 from . import book_crawler as bc
+from .classes import book
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    processed_data = bc.process_url("https://books.toscrape.com")
 
-    bc.process_url("https://books.toscrape.com")
+    return func.HttpResponse(body = str(list(map(lambda book: serialize(book), processed_data))), status_code=200, mimetype="application/json")
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+def serialize(book: book):
+    return book.as_dict()

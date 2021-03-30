@@ -1,10 +1,38 @@
+from . import category_crawler
+from .path_util import get_url_segment_from
+from .classes import category
+from .classes import book
+
 import urllib
 from lxml import html
 
-def process_url(url):
+
+
+def process_url(url: str) -> list[book]:
     with urllib.request.urlopen(url) as response:
         html_content = response.read()
         parsed_html = html.fromstring(html_content)
         
-        category_urls = parsed_html.xpath("//div[@class='side_categories']/ul/li/ul/li/a/@href")
-        print(category_urls)
+        caregory_html = parsed_html.xpath("//div[@class='side_categories']/ul/li/ul/li/a")
+        categories = extract_category_data(caregory_html)
+
+        books_by_categories = map(lambda category: category_crawler.process_category(url, category), categories)
+        return sum(books_by_categories, [])
+
+
+def extract_category_data(list_of_categories: list[html.HtmlElement])-> list[object]:
+    return list(map(lambda tag: extract_category_a_tag(tag), list_of_categories))
+
+
+
+def extract_category_a_tag(category_a_tag: html.HtmlElement) -> category:
+    href_value = category_a_tag.attrib["href"]
+    category_parts = get_url_segment_from(href_value, 3).split("_")
+
+    return category(
+        id = int(category_parts[1]),
+        technical_name = category_parts[0],
+        readable_name = category_a_tag.text.strip()
+    )
+    
+
