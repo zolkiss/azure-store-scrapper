@@ -1,8 +1,6 @@
 Azure Store Scrapper
 ====================
 
----
-
 State
 -----
 
