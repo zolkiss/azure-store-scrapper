@@ -1,6 +1,7 @@
 import logging
-
 import azure.functions as func
+
+from . import book_crawler as bc
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -14,6 +15,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             name = req_body.get('name')
+
+    bc.process_url("https://books.toscrape.com")
 
     if name:
         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
