@@ -6,7 +6,7 @@ from .path_util import get_url_segment_from
 from .classes import category
 from .classes import book
 
-def process_category(base_url: str, category_data: category) -> [category, list[book]]:
+def process_category(base_url: str, category_data: category):
     with urllib.request.urlopen(f"{base_url}/catalogue/category/books/{category_data.technical_name}_{category_data.category_num}/index.html") as response:
         html_content = response.read().decode('utf-8')
         parsed_html = html.fromstring(html_content)
