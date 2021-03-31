@@ -11,9 +11,8 @@ MASTER_KEY = cosmos_config.settings['master_key']
 DATABASE_ID = cosmos_config.settings['database_id']
 CONTAINER_ID = cosmos_config.settings['container_id']
 
-def recreate_database_data(category_with_books: [category, list[book]]):
-    client = cosmos_client.CosmosClient(
-            HOST, {'masterKey': MASTER_KEY}, user_agent="CosmosDBDotnetQuickstart", user_agent_overwrite=True)
+def recreate_database_data(category_with_books):
+    client = cosmos_client.CosmosClient(HOST, {'masterKey': MASTER_KEY}, user_agent="CosmosDBDotnetQuickstart", user_agent_overwrite=True)
     db = client.get_database_client(DATABASE_ID)
     container_client = db.get_container_client(CONTAINER_ID)
 
