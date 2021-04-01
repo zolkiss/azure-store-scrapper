@@ -6,7 +6,7 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "mostexpensivebook",
+      "route": "book/complex/mostExpensive",
       "methods": [
         "get"
       ]
