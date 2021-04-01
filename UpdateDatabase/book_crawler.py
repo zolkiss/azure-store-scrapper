@@ -1,3 +1,4 @@
+import logging
 import urllib
 
 from lxml import html
@@ -15,6 +16,7 @@ def process_url(url: str):
         category_html = parsed_html.xpath("//div[@class='side_categories']/ul/li/ul/li/a")
         categories = extract_category_data(category_html)
 
+        logging.info("Categories are fetched")
         return list(map(lambda category: category_crawler.process_category(url, category), categories))
 
 

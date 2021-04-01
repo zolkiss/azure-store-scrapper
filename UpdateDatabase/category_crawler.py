@@ -1,3 +1,4 @@
+import logging
 import unicodedata
 import urllib
 
@@ -9,6 +10,7 @@ from .path_util import get_url_segment_from
 
 
 def process_category(base_url: str, category_data: Category):
+    logging.info(f"Starting to process category: {category_data.technical_name}")
     with urllib.request.urlopen(
             f"{base_url}/catalogue/category/books/{category_data.technical_name}_{category_data.category_num}/index.html") as response:
         html_content = response.read().decode('utf-8')

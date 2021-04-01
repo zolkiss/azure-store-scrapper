@@ -1,3 +1,5 @@
+import logging
+
 import azure.cosmos.cosmos_client as cosmos_client
 
 from UpdateDatabase.classes import Book
@@ -20,11 +22,14 @@ def create_database_container_client():
 def recreate_database_data(category_with_books):
     container_client = create_database_container_client()
 
+    logging.info("Clearing database")
     clear_database(container_client)
 
     for category_and_book in category_with_books:
+        logging.info(f"Saving category: {category_and_book[0].technical_name}")
         save_category(category_and_book[0], container_client)
         for book in category_and_book[1]:
+            logging.info(f"Saving book '{book.technical_name} to category '{category_and_book[0].technical_name}'")
             save_book(book, container_client)
 
 
