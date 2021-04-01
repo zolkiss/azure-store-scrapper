@@ -15,7 +15,7 @@ def process_url(url: str):
         category_html = parsed_html.xpath("//div[@class='side_categories']/ul/li/ul/li/a")
         categories = extract_category_data(category_html)
 
-        return list(map(lambda category: category_crawler.process_category(url, category), [categories[0]]))
+        return list(map(lambda category: category_crawler.process_category(url, category), categories))
 
 
 def extract_category_data(list_of_categories):
