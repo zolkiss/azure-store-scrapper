@@ -1,10 +1,10 @@
 import logging
-import json
-import azure.functions as func
-import azure.cosmos.exceptions as exceptions
 
+import azure.cosmos.exceptions as exceptions
+import azure.functions as func
+
+from util import db_util as du
 from . import book_crawler as bc
-from . import db_util as du
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
