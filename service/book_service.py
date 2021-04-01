@@ -20,3 +20,7 @@ def get_books_by_category_num(category_num):
                                         parameters=[
                                             {"name": "@categoryNum", "value": category_num}
                                         ])
+
+
+def get_books_count_by_category_num(category_num):
+    return len(list(get_books_by_category_num(category_num)))

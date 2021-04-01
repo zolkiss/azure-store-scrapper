@@ -22,3 +22,10 @@ def get_categories_by_category_num(category_num):
         parameters=[
             {"name": "@categoryNum", "value": category_num}
         ])
+
+
+def get_category_basic_data_by_category_num():
+    container_client = db_util.create_database_container_client()
+    return container_client.query_items(
+        query="SELECT c.id, c.category_num, c.technical_name FROM c WHERE c._type='Category'",
+        enable_cross_partition_query=True)
