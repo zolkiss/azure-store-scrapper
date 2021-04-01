@@ -1,7 +1,7 @@
 import azure.cosmos.cosmos_client as cosmos_client
 
-from UpdateDatabase.classes import book
-from UpdateDatabase.classes import category
+from UpdateDatabase.classes import Book
+from UpdateDatabase.classes import Category
 from util import cosmos_config
 
 HOST = cosmos_config.settings['host']
@@ -35,9 +35,9 @@ def clear_database(container_client):
             item=document['id'], partition_key=document['category_num'])
 
 
-def save_category(category_data: category, container_client):
+def save_category(category_data: Category, container_client):
     container_client.create_item(category_data.__dict__)
 
 
-def save_book(book_data: book, container_client):
+def save_book(book_data: Book, container_client):
     container_client.create_item(book_data.__dict__)
